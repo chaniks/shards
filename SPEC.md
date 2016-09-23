@@ -28,6 +28,9 @@ development_dependencies:
 libraries:
   libgit2: ~> 0.24
 
+executables:
+  - shards
+
 scripts:
   postinstall: make ext
 
@@ -193,6 +196,25 @@ development_dependencies:
   minitest:
     github: ysbaddaden/minitest.cr
     version: ~> 0.1.3
+```
+
+### executables
+
+A list of executables to be linked by the shared (Array).
+
+The executables can be of any type or language (e.g., shell, binary, ruby), they
+must have the executable bit set (POSIX platforms) and they must exit in the
+`bin` folder of the Shard. When the library is installed as a dependency for
+another project the executables will be installed in the `bin` folder of the
+project.
+
+Executables are always installed last, that is after the `postinstall` script is
+run, so libraries can build the executables when they are installed.
+
+```yaml
+executables:
+  - micrate
+  - icr
 ```
 
 ### libraries

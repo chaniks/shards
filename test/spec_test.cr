@@ -99,6 +99,26 @@ module Shards
       assert_equal "master", spec.development_dependencies[1].refs
     end
 
+    def test_parse_executables
+      spec = Spec.from_yaml <<-YAML
+      name: test
+      version: 1.0.0
+      executables:
+        - micrate
+        - icr
+      YAML
+      assert_equal %w(micrate icr), spec.executables
+
+      assert_raises(Error) do
+        spec = Spec.from_yaml <<-YAML
+        name: test
+        version: 1.0.0
+        executables:
+          micrate: src/micrate.cr
+        YAML
+      end
+    end
+
     def test_parse_libraries
       spec = Spec.from_yaml <<-YAML
       name: sqlite3

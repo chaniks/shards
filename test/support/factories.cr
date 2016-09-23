@@ -53,7 +53,10 @@ module Shards
     end
 
     def create_file(project, filename, contents)
-      File.write File.join(git_path(project), filename), contents
+      path = File.join(git_path(project), filename)
+      parent = File.dirname(path)
+      Dir.mkdir_p(parent) unless Dir.exists?(parent)
+      File.write(path, contents)
     end
 
     def git_commits(project)

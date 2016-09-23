@@ -249,4 +249,22 @@ class InstallCommandTest < Minitest::Test
       assert_match "Error shard name (mock) doesn't match dependency name (typo)", ex.stdout
     end
   end
+
+  def test_creates_binstubs
+    metadata = {
+      dependencies: {
+        binary: { type: "path", path: rel_path(:binary) },
+      }
+    }
+
+    with_shard(metadata) do
+      puts run("shards install --no-color", capture: true)
+    end
+
+    assert File.exists?(File.join(application_path, "bin", "foobar")),
+      "Expected to have installed bin/foobar executable"
+
+    assert File.exists?(File.join(application_path, "bin", "baz")),
+      "Expected to have installed bin/baz executable"
+  end
 end

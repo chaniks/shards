@@ -44,6 +44,19 @@ module Shards
       end
     end
 
+    def install_binstubs
+      if installed? && spec.executables.any?
+        cwd = Dir.current
+
+        spec.executables.each do |name|
+          Shards.logger.debug "Install bin/#{name}"
+          source = File.join(install_path, "bin", name)
+          dest = File.join(cwd, "bin", name)
+          # TODO: create binstub
+        end
+      end
+    end
+
     protected def install_path
       File.join(Shards.install_path, dependency.name)
     end

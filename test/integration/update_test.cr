@@ -100,4 +100,8 @@ class UpdateCommandTest < Minitest::Test
       refute_locked "orm"
     end
   end
+
+  def test_installs_executables
+    flunk "TODO"
+  end
 end

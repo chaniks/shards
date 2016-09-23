@@ -62,6 +62,7 @@ module Shards
     def install(version = nil)
       resolver.install(version || self.version)
       resolver.run_script("postinstall")
+      resolver.install_binstubs
     rescue ex : Script::Error
       resolver.cleanup_install_directory
       raise ex

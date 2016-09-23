@@ -94,6 +94,10 @@ module Shards
             read_mapping(pull) { dependency[pull.read_scalar] = pull.read_scalar }
             development_dependencies << dependency
           end
+        when "executables"
+          read_sequence(pull) do
+            executables << pull.read_scalar
+          end
         when "libraries"
           read_mapping(pull) do
             libraries << Library.new(pull)
@@ -138,6 +142,10 @@ module Shards
 
     def development_dependencies
       @development_dependencies ||= [] of Dependency
+    end
+
+    def executables
+      @executables ||= [] of String
     end
 
     def libraries
